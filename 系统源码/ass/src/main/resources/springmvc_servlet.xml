@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<beans xmlns="http://www.springframework.org/schema/beans"   
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+    xmlns:p="http://www.springframework.org/schema/p"   
+    xmlns:context="http://www.springframework.org/schema/context"  
+    xsi:schemaLocation="  
+        http://www.springframework.org/schema/beans   
+        http://www.springframework.org/schema/beans/spring-beans-2.5.xsd  
+        http://www.springframework.org/schema/context   
+        http://www.springframework.org/schema/context/spring-context-2.5.xsd"  
+    default-autowire="byName"   >  
+  
+    <!-- 自动搜索@Controller标注的类 -->  
+    <context:component-scan base-package="com.**.controller"/>  
+    <bean class="cn.org.rapid_framework.spring.web.servlet.mvc.support.ControllerClassNameHandlerMapping" >  
+        <!-- <property name="caseSensitive" value="true"/> -->  
+        <!-- 前缀可选 -->  
+        <property name="pathPrefix" value="/pages"></property>  
+        <property name="interceptors">  
+            <bean class="com.pdcss.project.inteceptor.TimeBasedAccessInterceptor"/>  
+        </property>  
+    </bean>  
+         
+    <!-- Default ViewResolver -->  
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">  
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>  
+        <property name="prefix" value=""/>  
+        <property name="suffix" value=".jsp"></property>  
+    </bean>  
+      
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource" p:basename="i18n/messages"/>  
+  
+    <!-- Mapping exception to the handler view -->  
+    <bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">  
+        <property name="exceptionMappings">  
+            <props>  
+            </props>  
+        </property>  
+    </bean>  
+</beans> 
